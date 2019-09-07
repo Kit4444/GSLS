@@ -1,0 +1,6 @@
+author: MauriceLPs
+name: GSLS
+version: 1.0.0a
+main: gsls.system.Main
+
+commands:
