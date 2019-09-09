@@ -642,7 +642,7 @@ public class ScoreboardCLS implements Listener{
 				for(Player all : Bukkit.getOnlinePlayers()) {
 					SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
 					String stime = time.format(new Date());
-					TabAPI.sendTablist(all, "§aRedi§cCraft\n§aYour Minecraft-Network", "§7Here you are currently: §a" + Bukkit.getServerName() + " §7/§a " + Bukkit.getServerId() + "§7Current Time: §a" + stime);
+					TabAPI.sendTablist(all, "§aRedi§cCraft\n§aYour Minecraft-Network", "§7Here you are currently: §a" + Bukkit.getServerName() + " §7/§a " + Bukkit.getServerId() + "\n§7Current Time: §a" + stime);
 				}
 			}
 		}.runTaskTimer(Main.instance, delay, periodtabhf);

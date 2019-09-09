@@ -4,3 +4,6 @@ version: 1.0.0a
 main: gsls.system.Main
 
 commands:
+    build:
+    login:
+    logout:
