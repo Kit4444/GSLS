@@ -1,12 +1,16 @@
 package gsls.system.listener;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,64 +54,66 @@ public class ScoreboardCLS implements Listener{
 			o.setDisplayName("§aRedi§cCraft §7» §4" + puser + " §7/§9 " + pusermax);
 		}
 		o.getScore("§7Rank:").setScore(4);
-	    if (po.inGroup("Developer")) {
-	      o.getScore("  §5Developer").setScore(3);
-	    }else if (po.inGroup("Projectmanager")) {
-	      o.getScore("  §dProjectmanager").setScore(3);
-	    }else if (po.inGroup("SCMan")) {
-		  o.getScore("  §4Senior Community Manager").setScore(3);
-		}else if (po.inGroup("SGMan")) {
-		  o.getScore("  §4Senior Game Manager").setScore(3);
-		}else if (po.inGroup("SCMMan")) {
-		  o.getScore("  §eSenior Comm. Mod. Man.").setScore(3);
-		}else if (po.inGroup("CMan")) {
-	      o.getScore("  §4Community Manager").setScore(3);
-	    }else if (po.inGroup("GMan")) {
-	      o.getScore("  §cGame Manager").setScore(3);
-	    }else if (po.inGroup("CMMan")) {
-	      o.getScore("  §eCommunity Mod. Manager").setScore(3);
-	    }else if (po.inGroup("SMan")) {
-	      o.getScore("  §bSupport Manager").setScore(3);
-	    }else if (po.inGroup("MMan")) {
-	      o.getScore("  §6Media Manager").setScore(3);
-	    }else if (po.inGroup("Masterbuilder")) {
-	      o.getScore("  §9Builders Manager").setScore(3);
-	    }else if (po.inGroup("GM")) {
-	      o.getScore("  §cGame Moderator").setScore(3);
-	    }else if (po.inGroup("ST")) {
-	      o.getScore("  §bSupport Team").setScore(3);
-	    }else if (po.inGroup("CM")) {
-	      o.getScore("  §eCommunity Moderator").setScore(3);
-	    }else if (po.inGroup("MM")) {
-	      o.getScore("  §6Media Team").setScore(3);
-	    }else if (po.inGroup("Builder")) {
-	      o.getScore("  §9Builder").setScore(3);
-	    }else if (po.inGroup("TGM")) {
-	      o.getScore("  §cTrial Game Moderator").setScore(3);
-	    }else if (po.inGroup("TST")) {
-	      o.getScore("  §bTrial Support Team").setScore(3);
-	    }else if (po.inGroup("TCM")) {
-	      o.getScore("  §eTrial Community Moderator").setScore(3);
-	    }else if (po.inGroup("TMM")) {
-	      o.getScore("  §6Trial Media Team").setScore(3);
-	    }else if (po.inGroup("TBuild")) {
-	      o.getScore("  §9Trial Builder").setScore(3);
-	    }else if (po.inGroup("RediFMTeam")) {
-	      o.getScore("  §2Redi§6FM §7Team").setScore(3);
-	    }else if (po.inGroup("RLTM")) {
-	      o.getScore("  §aRetired Legend Team Member").setScore(3);
-	    }else if (po.inGroup("RTM")) {
-	      o.getScore("  §aRetired Team Member").setScore(3);
-	    }else if (po.inGroup("Beta")) {
-	      o.getScore("  §1Beta-Tester").setScore(3);
-	    }else if (po.inGroup("Friend")) {
-	      o.getScore("  §6Friend").setScore(3);
-	    }else {
-	      o.getScore("  §3User").setScore(3);
-	    } 
-	    o.getScore("§8").setScore(2);
-	    o.getScore("§7ID:").setScore(1);
-	    o.getScore("  §9" + igid(p)).setScore(0);
+		if (po.inGroup("Developer")) {
+		      o.getScore("  §5Developer").setScore(3);
+		    }else if (po.inGroup("Projectmanager")) {
+		      o.getScore("  §dProjectmanager").setScore(3);
+		    }else if (po.inGroup("SCMan")) {
+			  o.getScore("  §4Senior Community Manager").setScore(3);
+			}else if (po.inGroup("SGMan")) {
+			  o.getScore("  §4Senior Game Manager").setScore(3);
+			}else if (po.inGroup("SCMMan")) {
+			  o.getScore("  §eSenior Comm. Mod. Man.").setScore(3);
+			}else if (po.inGroup("CMan")) {
+		      o.getScore("  §4Community Manager").setScore(3);
+		    }else if (po.inGroup("GMan")) {
+		      o.getScore("  §cGame Manager").setScore(3);
+		    }else if (po.inGroup("CMMan")) {
+		      o.getScore("  §eCommunity Mod. Manager").setScore(3);
+		    }else if (po.inGroup("SMan")) {
+		      o.getScore("  §bSupport Manager").setScore(3);
+		    }else if (po.inGroup("MMan")) {
+		      o.getScore("  §6Media Manager").setScore(3);
+		    }else if (po.inGroup("Masterbuilder")) {
+		      o.getScore("  §9Builders Manager").setScore(3);
+		    }else if(po.inGroup("GMT")) {
+		    	o.getScore("§cGame Moderator Trainer").setScore(3);
+		    }else if (po.inGroup("GM")) {
+		      o.getScore("  §cGame Moderator").setScore(3);
+		    }else if (po.inGroup("ST")) {
+		      o.getScore("  §bSupport Team").setScore(3);
+		    }else if (po.inGroup("CM")) {
+		      o.getScore("  §eCommunity Moderator").setScore(3);
+		    }else if (po.inGroup("MM")) {
+		      o.getScore("  §6Media Team").setScore(3);
+		    }else if (po.inGroup("Builder")) {
+		      o.getScore("  §9Builder").setScore(3);
+		    }else if (po.inGroup("TGM")) {
+		      o.getScore("  §cTrial Game Moderator").setScore(3);
+		    }else if (po.inGroup("TST")) {
+		      o.getScore("  §bTrial Support Team").setScore(3);
+		    }else if (po.inGroup("TCM")) {
+		      o.getScore("  §eTrial Community Moderator").setScore(3);
+		    }else if (po.inGroup("TMM")) {
+		      o.getScore("  §6Trial Media Team").setScore(3);
+		    }else if (po.inGroup("TBuild")) {
+		      o.getScore("  §9Trial Builder").setScore(3);
+		    }else if (po.inGroup("RediFMTeam")) {
+		      o.getScore("  §2Redi§6FM §7Team").setScore(3);
+		    }else if (po.inGroup("RLTM")) {
+		      o.getScore("  §aRetired Legend Team Member").setScore(3);
+		    }else if (po.inGroup("RTM")) {
+		      o.getScore("  §aRetired Team Member").setScore(3);
+		    }else if (po.inGroup("Beta")) {
+		      o.getScore("  §1Beta-Tester").setScore(3);
+		    }else if (po.inGroup("Friend")) {
+		      o.getScore("  §6Friend").setScore(3);
+		    }else {
+		      o.getScore("  §3User").setScore(3);
+		    } 
+		    o.getScore("§8").setScore(2);
+		    o.getScore("§7ID:").setScore(1);
+		    o.getScore("  §7" + igpre(p) + " §9" + igid(p)).setScore(0);
 	    
 	    p.setScoreboard(sb);
 	    
@@ -122,6 +128,7 @@ public class ScoreboardCLS implements Listener{
 	    Team sman = getTeam(sb, "00050", "§bSM §7|§b ");
 	    Team mman = getTeam(sb, "00060", "§6MM §7|§6 ");
 	    Team mb = getTeam(sb, "00070", "§9BM §7|§9 ");
+	    Team gmt = getTeam(sb, "00072", "§cGMT §7|§c ");
 	    Team gm = getTeam(sb, "00080", "§cGM §7|§c ");
 	    Team st = getTeam(sb, "00090", "§bST §7|§b ");
 	    Team cm = getTeam(sb, "00100", "§eCM §7|§e ");
@@ -372,6 +379,26 @@ public class ScoreboardCLS implements Listener{
 	    				spieler.addPlayer(all);
 	    			}
 	    		}
+	    	}else if(pp.inGroup("GMT")) {
+	    		if(rs.getBoolean("loggedin")) {
+	    			if(Main.afk_list.contains(all.getName())) {
+	    				tafk.addPlayer(all);
+	    				all.setPlayerListName("§9AFK §7-§c " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    			}else {
+	    				all.setDisplayName("§cGame Moderator Trainer §7|§c " + all.getName());
+	    				all.setPlayerListName("§cGMT §7|§c " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    				gmt.addPlayer(all);
+	    			}
+	    		}else {
+	    			if(Main.afk_list.contains(all.getName())) {
+	    				afk.addPlayer(all);
+	    				all.setPlayerListName("§9AFK §7- " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    			}else {
+	    				all.setDisplayName("§3Player §7|§3 " + all.getName());
+	    				all.setPlayerListName("§3Player §7| " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    				spieler.addPlayer(all);
+	    			}
+	    		}
 	    	}else if(pp.inGroup("GM")) {
 	    		if(rs.getBoolean("loggedin")) {
 	    			if(Main.afk_list.contains(all.getName())) {
@@ -496,7 +523,7 @@ public class ScoreboardCLS implements Listener{
 	    			afk.addPlayer(all);
 	    			all.setPlayerListName("§9AFK §7- " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
 	    		}else {
-	    			all.setDisplayName("§aRetired Team Member §7|§ " + all.getName());
+	    			all.setDisplayName("§aRetired Team Member §7|§a " + all.getName());
 	    			all.setPlayerListName("§aRTM §7|§a " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
 	    			rtm.addPlayer(all);
 	    		}
@@ -610,9 +637,41 @@ public class ScoreboardCLS implements Listener{
 	}
 	
 	@EventHandler
-	public void onChatFormat(AsyncPlayerChatEvent e) throws SQLException {
+	public void onChatFormat(AsyncPlayerChatEvent e) throws SQLException, IOException {
 		Player p = e.getPlayer();
-		e.setFormat(p.getDisplayName() + " §8(§7" + igid(p) + "§8)§7: " + e.getMessage());
+		HashMap<String, Object> hm = new HashMap<>();
+		hm.put("Name", p.getUniqueId().toString().replaceAll("-", ""));
+		SimpleDateFormat fdate = new SimpleDateFormat("yy_MM_dd");
+        String sfdate = fdate.format(new Date());
+        SimpleDateFormat ctime = new SimpleDateFormat("HH-mm-ss");
+        String sctime = ctime.format(new Date());
+        File chat = new File("plugins/GSLS/Chatlogs/chat_" + sfdate + ".yml");
+        if (!chat.exists()) {
+        	chat.createNewFile();
+        }
+        YamlConfiguration cfg = YamlConfiguration.loadConfiguration(chat);
+        if(p.hasPermission("mlps.isTeam")) {
+        	ResultSet rs = Main.mysql.select("loginsys", hm);
+        	rs.next();
+        	if(rs.getBoolean("loggedin")) {
+        		cfg.set("Chat.defaultprotocol." + sctime, "[STAFF | LOGGED IN] " + p.getName() + ": " + e.getMessage());
+        		cfg.set("Chat.singlePerson." + p.getUniqueId().toString().replaceAll("-", "") + "." + p.getName() + "." + sctime, e.getMessage());
+        		cfg.save(chat);
+        	}else {
+        		cfg.set("Chat.defaultprotocol." + sctime, "[STAFF] " + p.getName() + ": " + e.getMessage());
+        		cfg.set("Chat.singlePerson." + p.getUniqueId().toString().replaceAll("-", "") + "." + p.getName() + "." + sctime, e.getMessage());
+        		cfg.save(chat);
+        	}
+        }else {
+        	cfg.set("Chat.defaultprotocol." + sctime, "[PLAYER] " + p.getName() + ": " + e.getMessage());
+    		cfg.set("Chat.singlePerson." + p.getUniqueId().toString().replaceAll("-", "") + "." + p.getName() + "." + sctime, e.getMessage());
+    		cfg.save(chat);
+        }
+        if(p.hasPermission("mlps.colorchat")) {
+        	e.setFormat(p.getDisplayName() + " §8(§7" + igid(p) + "§8)§7: " + e.getMessage().replace("&", "§"));
+        }else {
+        	e.setFormat(p.getDisplayName() + " §8(§7" + igid(p) + "§8)§7: " + e.getMessage());
+        }
 	}
 	
 	@EventHandler

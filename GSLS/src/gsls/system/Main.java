@@ -20,6 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.hotmail.steven.bconomy.account.AccountData;
 
 import gsls.api.mysql.lpb.MySQL;
+import gsls.system.cmd.AFKCMD;
 import gsls.system.cmd.CIDsetCMD;
 import gsls.system.cmd.LogCMD;
 import gsls.system.cmd.RecruitmentCMD;
@@ -132,6 +133,7 @@ public class Main extends JavaPlugin{
 		getCommand("recruitment").setExecutor(new RecruitmentCMD());
 		getCommand("setid").setExecutor(new CIDsetCMD());
 		getCommand("setpf").setExecutor(new CIDsetCMD());
+		getCommand("afk").setExecutor(new AFKCMD());
 	}
 	
 	public static void serverRestarter(int delay, int period) {

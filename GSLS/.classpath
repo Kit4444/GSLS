@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/Maurice/Documents/Workspace/MCAPIS/PermissionsEx-1.23.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Maurice/Documents/Workspace/MCAPIS/spigot1122.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Maurice/Documents/Workspace/MCAPIS/BConomy.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
