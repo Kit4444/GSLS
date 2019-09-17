@@ -3,6 +3,7 @@ package gsls.system;
 import java.io.File;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -16,13 +17,19 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.hotmail.steven.bconomy.account.AccountData;
+
 import gsls.api.mysql.lpb.MySQL;
+import gsls.system.cmd.CIDsetCMD;
 import gsls.system.cmd.LogCMD;
+import gsls.system.cmd.RecruitmentCMD;
 import gsls.system.listener.BlockClass;
 import gsls.system.listener.BuildClass;
 import gsls.system.listener.ScoreboardCLS;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_12_R1.MinecraftServer;
+import ru.tehkode.permissions.PermissionUser;
+import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 public class Main extends JavaPlugin{
 	
@@ -69,14 +76,21 @@ public class Main extends JavaPlugin{
 		File mysql = new File("plugins/GSLS/mysql.yml");
 		
 		File ordner = new File("plugins/GSLS");
+		File chordner = new File("plugins/GSLS/Chatlogs");
 		
 		if(!ordner.exists()) {
 			ordner.mkdirs();
+			if(!chordner.exists()) {
+				chordner.mkdirs();
+			}
 			if(!mysql.exists()) {
 				mysql.createNewFile();
 			}
 		}else {
 			ordner.mkdirs();
+			if(!chordner.exists()) {
+				chordner.mkdirs();
+			}
 			if(!mysql.exists()) {
 				mysql.createNewFile();
 			}
@@ -96,6 +110,7 @@ public class Main extends JavaPlugin{
 		ScoreboardCLS.startScheduler(0, 100, 20);
 		serverRestarter(0, 20);
 		writeDBStats(0, 100);
+		updateUserDBIG(0, 100);
 		try {
 			onCFG();
 		} catch (IOException e) {
@@ -114,6 +129,9 @@ public class Main extends JavaPlugin{
 		getCommand("build").setExecutor(new BuildClass());
 		getCommand("login").setExecutor(new LogCMD());
 		getCommand("logout").setExecutor(new LogCMD());
+		getCommand("recruitment").setExecutor(new RecruitmentCMD());
+		getCommand("setid").setExecutor(new CIDsetCMD());
+		getCommand("setpf").setExecutor(new CIDsetCMD());
 	}
 	
 	public static void serverRestarter(int delay, int period) {
@@ -229,6 +247,176 @@ public class Main extends JavaPlugin{
 	
 	private static String format(double tps) {
 		return String.valueOf((tps > 18.0 ? ChatColor.GREEN : (tps > 16.0 ? ChatColor.YELLOW : ChatColor.RED)).toString()) + (tps > 20.0 ? "*" : "") + Math.min((double)Math.round(tps * 100.0) / 100.0, 20.0);
+	}
+	
+	public static void updateUserDBIG(int delay, int period) {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				for(Player all : Bukkit.getOnlinePlayers()) {
+					try {
+						String uuid = all.getUniqueId().toString().replaceAll("-", "");
+						SimpleDateFormat time = new SimpleDateFormat("dd/MM/yy - HH:mm:ss");
+				        String stime = time.format(new Date());
+						PermissionUser po = PermissionsEx.getUser(all);
+						if(all.hasPermission("mlps.canBan")) {
+							int moneten = AccountData.getAccountBalance(all.getUniqueId().toString(), "default");
+							PreparedStatement log = gsls.api.mysql.lb.MySQL.getConnection().prepareStatement("SELECT * FROM loginsys WHERE Name = ?");
+							log.setString(1, uuid);
+							ResultSet rs = log.executeQuery();
+							rs.next();
+							boolean boo = rs.getBoolean("loggedin");
+							PreparedStatement ps = gsls.api.mysql.lb.MySQL.getConnection().prepareStatement("UPDATE playerigid SET rank = ?, money = ?, lastOnline = ?, loggedIn = ?, Name = ?, iscurrentlyingame = ?, ifingamewhichserver = ?, untrimmeduuid = ?, firstJoin = ?, iscurrentlyafk = ? WHERE uuid = ?");
+							ps.setString(11, uuid);
+							if (po.inGroup("Developer")) {
+							    ps.setString(1, "Developer");
+							}else if (po.inGroup("Projectmanager")) {
+							    ps.setString(1, "Projectmanager");
+							}else if (po.inGroup("SCMan")) {
+							    ps.setString(1, "Senior Community Manager");
+							}else if (po.inGroup("SGMan")) {
+								ps.setString(1, "Senior Game Manager");
+							}else if (po.inGroup("SCMMan")) {
+								ps.setString(1, "Senior Community Moderation Manager");
+							}else if (po.inGroup("CMan")) {
+								ps.setString(1, "Community Manager");
+							}else if (po.inGroup("GMan")) {
+							    ps.setString(1, "Game Manager");
+							}else if (po.inGroup("CMMan")) {
+							    ps.setString(1, "Community Moderation Manager");
+							}else if (po.inGroup("SMan")) {
+							    ps.setString(1, "Support Manager");
+							}else if (po.inGroup("MMan")) {
+							    ps.setString(1, "Media Manager");
+							}else if (po.inGroup("Masterbuilder")) {
+							    ps.setString(1, "Builders Manager");
+							}else if(po.inGroup("GMT")) {
+								ps.setString(1, "Game Moderator Trainer");
+							}else if (po.inGroup("GM")) {
+							    ps.setString(1, "Game Moderator");
+							}else if (po.inGroup("ST")) {
+							    ps.setString(1, "Support Team");
+							}else if (po.inGroup("CM")) {
+							    ps.setString(1, "Community Moderator");
+							}else if (po.inGroup("MM")) {
+							    ps.setString(1, "Media Team");
+							}else if (po.inGroup("Builder")) {
+							    ps.setString(1, "Builder");
+							}else if (po.inGroup("TGM")) {
+							    ps.setString(1, "Trial Game Moderator");
+							}else if (po.inGroup("TST")) {
+							    ps.setString(1, "Trial Support Team");
+							}else if (po.inGroup("TCM")) {
+							    ps.setString(1, "Trial Community Moderator");
+							}else if (po.inGroup("TMM")) {
+							    ps.setString(1, "Trial Media Team");
+							}else if (po.inGroup("TBuild")) {
+							    ps.setString(1, "Trial Builder");
+							}else if (po.inGroup("RediFMTeam")) {
+							    ps.setString(1, "RediFM Team");
+							}else if (po.inGroup("RLTM")) {
+							    ps.setString(1, "Retired Legend Team Member");
+							}else if (po.inGroup("RTM")) {
+							    ps.setString(1, "Retired Team Member");
+							}else if (po.inGroup("Beta")) {
+							    ps.setString(1, "Beta");
+							}else if (po.inGroup("Friend")) {
+							    ps.setString(1, "Friend");
+							}else {
+							    ps.setString(1, "User");
+							}
+							ps.setInt(2, moneten);
+							ps.setString(3, stime);
+							ps.setBoolean(4, boo);
+							ps.setString(5, all.getName());
+							ps.setBoolean(6, true);
+							ps.setString(7, "Gamesserver");
+							ps.setString(8, all.getUniqueId().toString());
+							ps.setString(9, stime);
+							if(Main.afk_list.contains(all.getName())) {
+								ps.setBoolean(10, true);
+							}else {
+								ps.setBoolean(10, false);
+							}
+							ps.executeUpdate();
+						}else {
+							int moneten = AccountData.getAccountBalance(all.getUniqueId().toString(), "default");
+							PreparedStatement ps = gsls.api.mysql.lb.MySQL.getConnection().prepareStatement("UPDATE playerigid SET rank = ?, money = ?, lastOnline = ?, Name = ?, iscurrentlyingame = ?, ifingamewhichserver = ?, untrimmeduuid = ?, iscurrentlyafk = ? WHERE uuid = ?");
+							ps.setString(9, uuid);
+							if (po.inGroup("Developer")) {
+							    ps.setString(1, "Developer");
+							}else if (po.inGroup("Projectmanager")) {
+							    ps.setString(1, "Projectmanager");
+							}else if (po.inGroup("SCMan")) {
+							    ps.setString(1, "Senior Community Manager");
+							}else if (po.inGroup("SGMan")) {
+								ps.setString(1, "Senior Game Manager");
+							}else if (po.inGroup("SCMMan")) {
+								ps.setString(1, "Senior Community Moderation Manager");
+							}else if (po.inGroup("CMan")) {
+								ps.setString(1, "Community Manager");
+							}else if (po.inGroup("GMan")) {
+							    ps.setString(1, "Game Manager");
+							}else if (po.inGroup("CMMan")) {
+							    ps.setString(1, "Community Moderation Manager");
+							}else if (po.inGroup("SMan")) {
+							    ps.setString(1, "Support Manager");
+							}else if (po.inGroup("MMan")) {
+							    ps.setString(1, "Media Manager");
+							}else if (po.inGroup("Masterbuilder")) {
+							    ps.setString(1, "Builders Manager");
+							}else if (po.inGroup("GM")) {
+							    ps.setString(1, "Game Moderator");
+							}else if (po.inGroup("ST")) {
+							    ps.setString(1, "Support Team");
+							}else if (po.inGroup("CM")) {
+							    ps.setString(1, "Community Moderator");
+							}else if (po.inGroup("MM")) {
+							    ps.setString(1, "Media Team");
+							}else if (po.inGroup("Builder")) {
+							    ps.setString(1, "Builder");
+							}else if (po.inGroup("TGM")) {
+							    ps.setString(1, "Trial Game Moderator");
+							}else if (po.inGroup("TST")) {
+							    ps.setString(1, "Trial Support Team");
+							}else if (po.inGroup("TCM")) {
+							    ps.setString(1, "Trial Community Moderator");
+							}else if (po.inGroup("TMM")) {
+							    ps.setString(1, "Trial Media Team");
+							}else if (po.inGroup("TBuild")) {
+							    ps.setString(1, "Trial Builder");
+							}else if (po.inGroup("RediFMTeam")) {
+							    ps.setString(1, "RediFM Team");
+							}else if (po.inGroup("RLTM")) {
+							    ps.setString(1, "Retired Legend Team Member");
+							}else if (po.inGroup("RTM")) {
+							    ps.setString(1, "Retired Team Member");
+							}else if (po.inGroup("Beta")) {
+							    ps.setString(1, "Beta");
+							}else if (po.inGroup("Friend")) {
+							    ps.setString(1, "Friend");
+							}else {
+							    ps.setString(1, "User");
+							}
+							ps.setInt(2, moneten);
+							ps.setString(3, stime);
+							ps.setString(4, all.getName());
+							ps.setBoolean(5, true);
+							ps.setString(6, "Gamesserver");
+							ps.setString(7, all.getUniqueId().toString());
+							if(Main.afk_list.contains(all.getName())) {
+								ps.setBoolean(8, true);
+							}else {
+								ps.setBoolean(8, false);
+							}
+							ps.executeUpdate();
+						}
+					}catch (SQLException sql) {
+						sql.printStackTrace();
+					}
+				}
+			}
+		}.runTaskTimer(Main.instance, delay, period);
 	}
 
 }
