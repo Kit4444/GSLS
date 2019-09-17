@@ -45,7 +45,7 @@ public class Main extends JavaPlugin{
 		File file = new File("plugins/GSLS/mysql.yml");
 		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 		gsls.api.mysql.lb.MySQL.connect(cfg.getString("MySQL.IP"), cfg.getString("MySQL.Port"), cfg.getString("MySQL.Database"), cfg.getString("MySQL.user"), cfg.getString("MySQL.Pass"));
-		mysql = new MySQL(cfg.getString("MySQL.IP"), Integer.valueOf(cfg.getString("MySQL.Port")), cfg.getString("MySQL.Database"), cfg.getString("MySQL.User"), cfg.getString("MySQL.Password"));
+		mysql = new MySQL(cfg.getString("MySQL.IP"), Integer.valueOf(cfg.getString("MySQL.Port")), cfg.getString("MySQL.Database"), cfg.getString("MySQL.user"), cfg.getString("MySQL.Pass"));
 		try {
 			mysql.connect();
 		}catch (SQLException e) {
