@@ -24,6 +24,7 @@ import gsls.system.cmd.AFKCMD;
 import gsls.system.cmd.CIDsetCMD;
 import gsls.system.cmd.LogCMD;
 import gsls.system.cmd.RecruitmentCMD;
+import gsls.system.cmd.WarpSetCMD;
 import gsls.system.listener.BlockClass;
 import gsls.system.listener.BuildClass;
 import gsls.system.listener.ScoreboardCLS;
@@ -36,12 +37,16 @@ public class Main extends JavaPlugin{
 	
 	public static String prefix = "§aRedi§cCraft §7» ";
 	public static String mysqlprefix = "§6MySQL §7» ";
-	public static String noperm = prefix + "§cInsufficent Permissions!";
 	public static String consolesend = prefix + "§aPlease run the command on the game server.";
 	public static String unavailable = prefix + "§cOoops. Thats currently unavailable.";
 	public static Main instance;
 	public static MySQL mysql;
 	public static ArrayList<String> afk_list = new ArrayList<>();
+	
+	public static String noperm(String lackperm) {
+		String noperm = prefix + "§cInsufficent Permissions!";
+		return noperm + "\n§7You are lacking the following Permission-Note:§c " + lackperm;
+	}
 	
 	public void onEnable() {
 		Bukkit.getConsoleSender().sendMessage(prefix + "§aPlugin will be activating...");
@@ -134,6 +139,7 @@ public class Main extends JavaPlugin{
 		getCommand("setid").setExecutor(new CIDsetCMD());
 		getCommand("setpf").setExecutor(new CIDsetCMD());
 		getCommand("afk").setExecutor(new AFKCMD());
+		getCommand("setwarp").setExecutor(new WarpSetCMD());
 	}
 	
 	public static void serverRestarter(int delay, int period) {

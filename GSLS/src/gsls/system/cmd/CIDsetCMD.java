@@ -48,7 +48,7 @@ public class CIDsetCMD implements CommandExecutor{
 							}
 						}
 					}else {
-						p.sendMessage(Main.noperm);
+						p.sendMessage(Main.noperm("mlps.setPF"));
 					}
 				}
 			}else if(cmd.getName().equalsIgnoreCase("setid")) {
@@ -90,7 +90,7 @@ public class CIDsetCMD implements CommandExecutor{
 							}
 						}
 					}else {
-						p.sendMessage(Main.noperm);
+						p.sendMessage(Main.noperm("mlps.setID"));
 					}
 				}
 			}

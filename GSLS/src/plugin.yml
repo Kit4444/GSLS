@@ -11,3 +11,4 @@ commands:
     setid:
     setpf:
     afk:
+    setwarp:

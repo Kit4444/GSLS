@@ -31,7 +31,7 @@ public class LogCMD implements CommandExecutor{
 						e.printStackTrace();
 					}
 				}else {
-					p.sendMessage(Main.noperm);
+					p.sendMessage(Main.noperm("mlps.canBan"));
 				}
 			}else if(cmd.getName().equalsIgnoreCase("logout")) {
 				if(p.hasPermission("mlps.canBan")) {
@@ -45,7 +45,7 @@ public class LogCMD implements CommandExecutor{
 						e.printStackTrace();
 					}
 				}else {
-					p.sendMessage(Main.noperm);
+					p.sendMessage(Main.noperm("mlps.canBan"));
 				}
 			}
 		}

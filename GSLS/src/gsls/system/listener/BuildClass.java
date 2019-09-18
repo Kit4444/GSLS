@@ -37,7 +37,7 @@ public class BuildClass implements CommandExecutor, Listener{
 							p.sendMessage(Main.prefix + "§7You can build now.");
 						}
 					}else {
-						p.sendMessage(Main.noperm);
+						p.sendMessage(Main.noperm("mlps.canBuild"));
 					}
 				}else {
 					String player = args[0];
@@ -56,7 +56,7 @@ public class BuildClass implements CommandExecutor, Listener{
 								p2.sendMessage(Main.prefix + "§7You got allowed to build from " + p.getDisplayName());
 							}
 						}else {
-							p.sendMessage(Main.noperm);
+							p.sendMessage(Main.noperm("mlps.canBuild.others"));
 						}
 					}
 				}
