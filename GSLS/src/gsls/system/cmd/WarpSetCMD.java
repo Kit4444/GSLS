@@ -27,7 +27,7 @@ public class WarpSetCMD implements CommandExecutor{
 			Player p = (Player)sender;
 			if(args.length == 0) {
 				p.sendMessage(Main.prefix + "§7Usage: /setwarp <Gamename*>");
-				p.sendMessage("§7* -> Defaults: BedWars, GunGames");
+				p.sendMessage("§7* -> Defaults: Spawn, BedWars, GunGames, FFA, 1vs1");
 			}else if(args.length == 1) {
 				String game = args[0];
 				if(p.hasPermission("mlps.setWarp.Gameslobby")) {
@@ -41,7 +41,7 @@ public class WarpSetCMD implements CommandExecutor{
 				}
 			}else {
 				p.sendMessage(Main.prefix + "§7Usage: /setwarp <Gamename*>");
-				p.sendMessage("§7* -> Defaults: BedWars, GunGames");
+				p.sendMessage("§7* -> Defaults: Spawn, BedWars, GunGames, FFA, 1vs1");
 			}
 		}
 		return false;
@@ -59,19 +59,25 @@ public class WarpSetCMD implements CommandExecutor{
         double pitch = loc.getPitch();
         double yaw = loc.getYaw();
         String world = loc.getWorld().getName().toString();
-        cfg.set("Warp." + game + ".X", x);
-        cfg.set("Warp." + game + ".Y", y);
-        cfg.set("Warp." + game + ".Z", z);
-        cfg.set("Warp." + game + ".Pitch", pitch);
-        cfg.set("Warp." + game + ".Yaw", yaw);
-        cfg.set("Warp." + game + ".World", world);
-        cfg.set("Warp." + game + ".Admin", admin);
-        cfg.set("Warp." + game + ".Time", stime);
+        cfg.set("Warp." + game.toLowerCase() + ".X", x);
+        cfg.set("Warp." + game.toLowerCase() + ".Y", y);
+        cfg.set("Warp." + game.toLowerCase() + ".Z", z);
+        cfg.set("Warp." + game.toLowerCase() + ".Pitch", pitch);
+        cfg.set("Warp." + game.toLowerCase() + ".Yaw", yaw);
+        cfg.set("Warp." + game.toLowerCase() + ".World", world);
+        cfg.set("Warp." + game.toLowerCase() + ".Admin", admin);
+        cfg.set("Warp." + game.toLowerCase() + ".Time", stime);
         cfg.save(file);
         if(game.equalsIgnoreCase("bedwars")) {
-        	p.sendMessage(Main.prefix + "§7Default-Warp setted. Game: BedWars");
+        	p.sendMessage(Main.prefix + "§7Default-Warp setted. Game: §9BedWars");
         }else if(game.equalsIgnoreCase("gungames")) {
-        	p.sendMessage(Main.prefix + "§7Default-Warp setted. Game: GunGames");
+        	p.sendMessage(Main.prefix + "§7Default-Warp setted. Game: §9GunGames");
+        }else if(game.equalsIgnoreCase("FFA")) {
+        	p.sendMessage(Main.prefix + "§7Default-Warp setted. Game: §9FFA (Free For All)");
+        }else if(game.equalsIgnoreCase("1vs1")) {
+        	p.sendMessage(Main.prefix + "§7Default-Warp setted. Game: §91 vs 1");
+        }else if(game.equalsIgnoreCase("Spawn")) {
+        	p.sendMessage(Main.prefix + "§7Spawn setted.");
         }else {
         	p.sendMessage(Main.prefix + "Custom-Warp setted. Game: " + game);
         }

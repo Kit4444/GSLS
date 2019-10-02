@@ -21,12 +21,15 @@ import com.hotmail.steven.bconomy.account.AccountData;
 
 import gsls.api.mysql.lpb.MySQL;
 import gsls.system.cmd.AFKCMD;
+import gsls.system.cmd.AntiExecuteCMD;
 import gsls.system.cmd.CIDsetCMD;
 import gsls.system.cmd.LogCMD;
+import gsls.system.cmd.NickCMD;
 import gsls.system.cmd.RecruitmentCMD;
 import gsls.system.cmd.WarpSetCMD;
 import gsls.system.listener.BlockClass;
 import gsls.system.listener.BuildClass;
+import gsls.system.listener.JoinEV;
 import gsls.system.listener.ScoreboardCLS;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_12_R1.MinecraftServer;
@@ -129,6 +132,8 @@ public class Main extends JavaPlugin{
 		pl.registerEvents(new ScoreboardCLS(), this);
 		pl.registerEvents(new BuildClass(), this);
 		pl.registerEvents(new BlockClass(), this);
+		pl.registerEvents(new AntiExecuteCMD(), this);
+		pl.registerEvents(new JoinEV(), this);
 	}
 	
 	private void registerCMD() {
@@ -140,6 +145,7 @@ public class Main extends JavaPlugin{
 		getCommand("setpf").setExecutor(new CIDsetCMD());
 		getCommand("afk").setExecutor(new AFKCMD());
 		getCommand("setwarp").setExecutor(new WarpSetCMD());
+		getCommand("setnick").setExecutor(new NickCMD());
 	}
 	
 	public static void serverRestarter(int delay, int period) {

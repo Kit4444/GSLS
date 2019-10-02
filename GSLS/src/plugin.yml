@@ -12,3 +12,4 @@ commands:
     setpf:
     afk:
     setwarp:
+    setnick:
