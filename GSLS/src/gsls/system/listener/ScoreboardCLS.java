@@ -66,49 +66,61 @@ public class ScoreboardCLS implements Listener{
         	hml.put("Name", p.getUniqueId().toString().replace("-", ""));
         	ResultSet rss = Main.mysql.select("loginsys", hml);
         	rss.next();
+        	o.getScore("§7Logged in:").setScore(10);
     		if(rss.getBoolean("loggedin")) {
-        		o.getScore("§7Logged in:").setScore(10);
         		o.getScore("§9  true").setScore(9);
-        		o.getScore(" ").setScore(8);
         	}else {
-        		o.getScore("§7Logged in:").setScore(10);
         		o.getScore("§9  false").setScore(9);
-        		o.getScore(" ").setScore(8);
         	}
+    		o.getScore(" ").setScore(8);
     	}
 		o.getScore("§7Money:").setScore(7);
 		o.getScore("  §9" + moneten).setScore(6);
 		o.getScore("§b").setScore(5);
 		o.getScore("§7Rank:").setScore(4);
-	    if (po.inGroup("Developer")) {
-	      o.getScore("  §dDeveloper").setScore(3);
-	    }else if (po.inGroup("Projectmanager")) {
-	      o.getScore("  §6Projectmanager").setScore(3);
-	    }else if (po.inGroup("CMan")) {
-	      o.getScore("  §2Community Manager").setScore(3);
-	    }else if (po.inGroup("AMan")) {
-	      o.getScore("  §4Administrations Manager").setScore(3);
-	    }else if (po.inGroup("Admin")) {
-	      o.getScore("  §cAdministrator").setScore(3);
-	    }else if (po.inGroup("Support")) {
-	      o.getScore("  §9Support").setScore(3);
-	    }else if (po.inGroup("Mod")) {
-	      o.getScore("  §aModerator").setScore(3);
-	    }else if (po.inGroup("Builder")) {
-	      o.getScore("  §bBuilder").setScore(3);
-	    }else if (po.inGroup("RediFMTeam")) {
-	      o.getScore("  §2Redi§6FM §7Team").setScore(3);
-	    }else if (po.inGroup("RLTM")) {
-	      o.getScore("  §aRetired Legend Team Member").setScore(3);
-	    }else if (po.inGroup("RTM")) {
-	      o.getScore("  §aRetired Team Member").setScore(3);
-	    }else if (po.inGroup("Beta")) {
-	      o.getScore("  §1Beta-Tester").setScore(3);
-	    }else if (po.inGroup("Friend")) {
-	      o.getScore("  §3Friend").setScore(3);
-	    }else {
-	      o.getScore("  §7User").setScore(3);
-	    } 
+		if (po.inGroup("Developer")) {
+			o.getScore("  §dDeveloper").setScore(3);
+		}else if (po.inGroup("Projectmanager")) {
+			o.getScore("  §6Projectmanager").setScore(3);
+		}else if (po.inGroup("CMan")) {
+			o.getScore("  §2Community Manager").setScore(3);
+		}else if (po.inGroup("AMan")) {
+			o.getScore("  §4Administrations Manager").setScore(3);
+		}else if (po.inGroup("Admin")) {
+			o.getScore("  §cAdministrator").setScore(3);
+		}else if (po.inGroup("Support")) {
+			o.getScore("  §9Support").setScore(3);
+		}else if (po.inGroup("Mod")) {
+			o.getScore("  §aModerator").setScore(3);
+		}else if (po.inGroup("Builder")) {
+			o.getScore("  §bBuilder").setScore(3);
+		}else if (po.inGroup("RediFMTeam")) {
+			o.getScore("  §2Redi§6FM §7Team").setScore(3);
+		}else if (po.inGroup("RLTM")) {
+			o.getScore("  §3Retired Legend Team Member").setScore(3);
+		}else if (po.inGroup("RTM")) {
+			o.getScore("  §3Retired Team Member").setScore(3);
+		}else if(po.inGroup("Partner")) {
+			o.getScore("  §aPartner").setScore(3);
+		}else if (po.inGroup("Beta")) {
+			o.getScore("  §5Beta-Tester").setScore(3);
+		}else if(po.inGroup("Patron")) {
+			o.getScore("  §ePatron").setScore(3);
+		}else if(po.inGroup("NitroBooster")) {
+			o.getScore("  §5Nitro Booster").setScore(3);
+		}else if(po.inGroup("VIPpls")) {
+			o.getScore("  §eVIP§2+").setScore(3);
+		}else if(po.inGroup("VIP")) {
+			o.getScore("  §eVIP").setScore(3);
+		}else if(po.inGroup("Premiumpls")) {
+			o.getScore("  §ePremium§2+").setScore(3);
+		}else if(po.inGroup("Premium")) {
+			o.getScore("  §ePremium").setScore(3);
+		}else if (po.inGroup("Friend")) {
+			o.getScore("  §3Friend").setScore(3);
+		}else {
+			o.getScore("  §7User").setScore(3);
+		}
 	    o.getScore("§8").setScore(2);
 	    o.getScore("§7ID:").setScore(1);
 	    o.getScore("  §7" + igpre(p) + " §9" + igid(p)).setScore(0);
@@ -124,11 +136,12 @@ public class ScoreboardCLS implements Listener{
 	    Team support = getTeam(sb, "00060", "§9S §7|§9 "); //blue
 	    Team builder = getTeam(sb, "00070", "§bB §7|§b "); //aqua
 	    Team rft = getTeam(sb, "00080", "§aR§6FM§7T |§a "); //multi
-	    Team rltm = getTeam(sb, "00090", "§5RLTM §7|§a "); //dark-purple
-	    Team rtm = getTeam(sb, "00100", "§5RTM §7|§a "); //dark-purple
+	    Team rltm = getTeam(sb, "00090", "§3RLTM §7|§5 "); //dark-purple
+	    Team rtm = getTeam(sb, "00100", "§3RTM §7|§5 "); //dark-purple
 	    Team partner = getTeam(sb, "00110", "§aP §7|§a "); //green
-	    Team beta = getTeam(sb, "00120", "§1Beta §7|§c "); //dark-blue & red
-	    Team nitrobooster = getTeam(sb, "00125", "§1NB §7|§1 "); //dark-blue
+	    Team beta = getTeam(sb, "00120", "§5Beta §7|§c "); //dark-blue & red
+	    Team patron = getTeam(sb, "00121", "§ePatron §7| "); //dark-aqua
+	    Team nitrobooster = getTeam(sb, "00125", "§5NB §7| "); //dark-blue
 	    Team freund = getTeam(sb, "00130", "§3Friend §7| "); //dark-aqua
 	    Team vippl = getTeam(sb, "00140", "§eVIP§2+ §7| "); //yellow
 	    Team vip = getTeam(sb, "00150", "§eVIP §7| "); //yellow
@@ -137,7 +150,6 @@ public class ScoreboardCLS implements Listener{
 	    Team spieler = getTeam(sb, "00180", "§7Player §7| "); //gray
 	    Team tafk = getTeam(sb, "00190", "§9AFK §7-§c ");
 	    Team afk = getTeam(sb, "00200", "§9AFK §7-");
-	    
 	    for(Player all : Bukkit.getOnlinePlayers()) {
 	    	PermissionUser pp = PermissionsEx.getUser(all);
 	    	HashMap<String, Object> hm = new HashMap<>();
@@ -397,7 +409,7 @@ public class ScoreboardCLS implements Listener{
     	    			support.addPlayer(all);
     				}
 	    		}
-	    	}else if(pp.inGroup("Moderator")) {
+	    	}else if(pp.inGroup("Mod")) {
 	    		if(Main.afk_list.contains(all.getName())) {
 	    			if(nick(all).equals("RESET")) {
 	    				tafk.addPlayer(all);
@@ -475,13 +487,13 @@ public class ScoreboardCLS implements Listener{
     				}
 	    		}else {
 	    			if(nick(all).equals("RESET")) {
-	    				all.setDisplayName("§5Retired Legend Team Member §7|§5 " + all.getName());
-		    			all.setPlayerListName("§5RLTM §7|§5 " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    				all.setDisplayName("§3Retired Legend Team Member §7|§3 " + all.getName());
+		    			all.setPlayerListName("§3RLTM §7|§3 " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
 		    			rltm.addPlayer(all);
     				}else {
     					all.setCustomName(nick(all));
-    					all.setDisplayName("§5Retired Legend Team Member §7|§5 " + all.getCustomName());
-    	    			all.setPlayerListName("§5RLTM §7|§5 " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+    					all.setDisplayName("§3Retired Legend Team Member §7|§3 " + all.getCustomName());
+    	    			all.setPlayerListName("§3RLTM §7|§3 " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
     	    			rltm.addPlayer(all);
     				}
 	    		}
@@ -497,13 +509,13 @@ public class ScoreboardCLS implements Listener{
     				}
 	    		}else {
 	    			if(nick(all).equals("RESET")) {
-	    				all.setDisplayName("§5Retired Team Member §7|§5 " + all.getName());
-		    			all.setPlayerListName("§5RTM §7|§5 " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    				all.setDisplayName("§3Retired Team Member §7|§3 " + all.getName());
+		    			all.setPlayerListName("§3RTM §7|§3 " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
 		    			rtm.addPlayer(all);
     				}else {
     					all.setCustomName(nick(all));
-    					all.setDisplayName("§5Retired Team Member §7|§5 " + all.getCustomName());
-    	    			all.setPlayerListName("§5RTM §7|§5 " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+    					all.setDisplayName("§3Retired Team Member §7|§3 " + all.getCustomName());
+    	    			all.setPlayerListName("§3RTM §7|§3 " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
     	    			rtm.addPlayer(all);
     				}
 	    		}
@@ -541,37 +553,107 @@ public class ScoreboardCLS implements Listener{
     				}
 	    		}else {
 	    			if(nick(all).equals("RESET")) {
-	    				all.setDisplayName("§1Beta §7|§c " + all.getName());
-		    			all.setPlayerListName("§1Beta §7|§c " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    				all.setDisplayName("§5Beta §7|§c " + all.getName());
+		    			all.setPlayerListName("§5Beta §7|§c " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
 		    			beta.addPlayer(all);
     				}else {
     					all.setCustomName(nick(all));
-    					all.setDisplayName("§1Beta §7|§c " + all.getCustomName());
-    	    			all.setPlayerListName("§1Beta §7|§c " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+    					all.setDisplayName("§5Beta §7|§c " + all.getCustomName());
+    	    			all.setPlayerListName("§5Beta §7|§c " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
     	    			beta.addPlayer(all);
     				}
 	    		}
-	    	}else if(pp.inGroup("NitroBoost")) {
-	    		if(Main.afk_list.contains(all.getName())) {
-	    			if(nick(all).equals("RESET")) {
-	    				afk.addPlayer(all);
-		    			all.setPlayerListName("§9AFK §7- " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
-    				}else {
-    					all.setCustomName(nick(all));
-    					afk.addPlayer(all);
-    	    			all.setPlayerListName("§9AFK §7- " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
-    				}
+	    	}else if(pp.inGroup("Patron")) {
+	    		if(rs.getBoolean("loggedin")) {
+	    			if(Main.afk_list.contains(all.getName())) {
+		    			if(nick(all).equals("RESET")) {
+		    				afk.addPlayer(all);
+			    			all.setPlayerListName("§9AFK §7- " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    				}else {
+	    					all.setCustomName(nick(all));
+	    					afk.addPlayer(all);
+	    	    			all.setPlayerListName("§9AFK §7- " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    				}
+		    		}else {
+		    			if(nick(all).equals("RESET")) {
+		    				all.setDisplayName("§ePatron §7|§c " + all.getName());
+			    			all.setPlayerListName("§ePatron §7| " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+			    			patron.addPlayer(all);
+	    				}else {
+	    					all.setCustomName(nick(all));
+	    					all.setDisplayName("§ePatron §7| " + all.getCustomName());
+	    	    			all.setPlayerListName("§ePatron §7| " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    	    			patron.addPlayer(all);
+	    				}
+		    		}
 	    		}else {
-	    			if(nick(all).equals("RESET")) {
-	    				all.setDisplayName("§1Nitro Booster §7|§1 " + all.getName());
-		    			all.setPlayerListName("§1NB §7|§1 " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
-		    			nitrobooster.addPlayer(all);
-    				}else {
-    					all.setCustomName(nick(all));
-    					all.setDisplayName("§1Nitro Booster §7|§1 " + all.getCustomName());
-    	    			all.setPlayerListName("§1NB §7|§1 " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
-    	    			nitrobooster.addPlayer(all);
-    				}
+	    			if(Main.afk_list.contains(all.getName())) {
+		    			if(nick(all).equals("RESET")) {
+		    				afk.addPlayer(all);
+			    			all.setPlayerListName("§9AFK §7- " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    				}else {
+	    					all.setCustomName(nick(all));
+	    					afk.addPlayer(all);
+	    	    			all.setPlayerListName("§9AFK §7- " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    				}
+		    		}else {
+		    			if(nick(all).equals("RESET")) {
+		    				all.setDisplayName("§7Player | " + all.getName());
+			    			all.setPlayerListName("§7Player | " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+		    				spieler.addPlayer(all);
+	    				}else {
+	    					all.setCustomName(nick(all));
+	    					all.setDisplayName("§7Player | " + all.getCustomName());
+	    	    			all.setPlayerListName("§7Player | " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	        				spieler.addPlayer(all);
+	    				}
+		    		}
+	    		}
+	    	}else if(pp.inGroup("NitroBooster")) {
+	    		if(rs.getBoolean("loggedin")) {
+	    			if(Main.afk_list.contains(all.getName())) {
+		    			if(nick(all).equals("RESET")) {
+		    				afk.addPlayer(all);
+			    			all.setPlayerListName("§9AFK §7- " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    				}else {
+	    					all.setCustomName(nick(all));
+	    					afk.addPlayer(all);
+	    	    			all.setPlayerListName("§9AFK §7- " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    				}
+		    		}else {
+		    			if(nick(all).equals("RESET")) {
+		    				all.setDisplayName("§1Nitro Booster §7|§1 " + all.getName());
+			    			all.setPlayerListName("§1NB §7|§1 " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+			    			nitrobooster.addPlayer(all);
+	    				}else {
+	    					all.setCustomName(nick(all));
+	    					all.setDisplayName("§1Nitro Booster §7|§1 " + all.getCustomName());
+	    	    			all.setPlayerListName("§1NB §7|§1 " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    	    			nitrobooster.addPlayer(all);
+	    				}
+		    		}
+	    		}else {
+	    			if(Main.afk_list.contains(all.getName())) {
+		    			if(nick(all).equals("RESET")) {
+		    				afk.addPlayer(all);
+			    			all.setPlayerListName("§9AFK §7- " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    				}else {
+	    					all.setCustomName(nick(all));
+	    					afk.addPlayer(all);
+	    	    			all.setPlayerListName("§9AFK §7- " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	    				}
+		    		}else {
+		    			if(nick(all).equals("RESET")) {
+		    				all.setDisplayName("§7Player | " + all.getName());
+			    			all.setPlayerListName("§7Player | " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+		    				spieler.addPlayer(all);
+	    				}else {
+	    					all.setCustomName(nick(all));
+	    					all.setDisplayName("§7Player | " + all.getCustomName());
+	    	    			all.setPlayerListName("§7Player | " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
+	        				spieler.addPlayer(all);
+	    				}
+		    		}
 	    		}
 	    	}else if(pp.inGroup("Friend")) {
 	    		if(Main.afk_list.contains(all.getName())) {
@@ -695,12 +777,12 @@ public class ScoreboardCLS implements Listener{
     				}
 	    		}else {
 	    			if(nick(all).equals("RESET")) {
-	    				all.setDisplayName("§7Player |  " + all.getName());
+	    				all.setDisplayName("§7Player | " + all.getName());
 		    			all.setPlayerListName("§7Player | " + all.getName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
 	    				spieler.addPlayer(all);
     				}else {
     					all.setCustomName(nick(all));
-    					all.setDisplayName("§7Player |  " + all.getCustomName());
+    					all.setDisplayName("§7Player | " + all.getCustomName());
     	    			all.setPlayerListName("§7Player | " + all.getCustomName() + " §7| §aID§7: " + igpre(all) + " §7" + igid(all));
         				spieler.addPlayer(all);
     				}

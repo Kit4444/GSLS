@@ -13,3 +13,4 @@ commands:
     afk:
     setwarp:
     setnick:
+    serverinfo:

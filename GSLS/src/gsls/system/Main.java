@@ -3,7 +3,6 @@ package gsls.system;
 import java.io.File;
 import java.io.IOException;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -26,6 +25,7 @@ import gsls.system.cmd.CIDsetCMD;
 import gsls.system.cmd.LogCMD;
 import gsls.system.cmd.NickCMD;
 import gsls.system.cmd.RecruitmentCMD;
+import gsls.system.cmd.ServerInfoCMD;
 import gsls.system.cmd.WarpSetCMD;
 import gsls.system.listener.BlockClass;
 import gsls.system.listener.BuildClass;
@@ -146,6 +146,7 @@ public class Main extends JavaPlugin{
 		getCommand("afk").setExecutor(new AFKCMD());
 		getCommand("setwarp").setExecutor(new WarpSetCMD());
 		getCommand("setnick").setExecutor(new NickCMD());
+		getCommand("serverinfo").setExecutor(new ServerInfoCMD());
 	}
 	
 	public static void serverRestarter(int delay, int period) {
@@ -270,62 +271,26 @@ public class Main extends JavaPlugin{
 				for(Player all : Bukkit.getOnlinePlayers()) {
 					try {
 						String uuid = all.getUniqueId().toString().replaceAll("-", "");
-						SimpleDateFormat time = new SimpleDateFormat("dd/MM/yy - HH:mm:ss");
-				        String stime = time.format(new Date());
 						PermissionUser po = PermissionsEx.getUser(all);
-						if(all.hasPermission("mlps.canBan")) {
 							int moneten = AccountData.getAccountBalance(all.getUniqueId().toString(), "default");
-							PreparedStatement log = gsls.api.mysql.lb.MySQL.getConnection().prepareStatement("SELECT * FROM loginsys WHERE Name = ?");
-							log.setString(1, uuid);
-							ResultSet rs = log.executeQuery();
-							rs.next();
-							boolean boo = rs.getBoolean("loggedin");
-							PreparedStatement ps = gsls.api.mysql.lb.MySQL.getConnection().prepareStatement("UPDATE playerigid SET rank = ?, money = ?, lastOnline = ?, loggedIn = ?, Name = ?, iscurrentlyingame = ?, ifingamewhichserver = ?, untrimmeduuid = ?, firstJoin = ?, iscurrentlyafk = ? WHERE uuid = ?");
-							ps.setString(11, uuid);
+							PreparedStatement ps = gsls.api.mysql.lb.MySQL.getConnection().prepareStatement("UPDATE playerigid SET rank = ?, money = ?, ifingamewhichserver = ?, iscurrentlyafk = ? WHERE uuid = ?");
+							ps.setString(5, uuid);
 							if (po.inGroup("Developer")) {
 							    ps.setString(1, "Developer");
 							}else if (po.inGroup("Projectmanager")) {
 							    ps.setString(1, "Projectmanager");
-							}else if (po.inGroup("SCMan")) {
-							    ps.setString(1, "Senior Community Manager");
-							}else if (po.inGroup("SGMan")) {
-								ps.setString(1, "Senior Game Manager");
-							}else if (po.inGroup("SCMMan")) {
-								ps.setString(1, "Senior Community Moderation Manager");
 							}else if (po.inGroup("CMan")) {
 								ps.setString(1, "Community Manager");
-							}else if (po.inGroup("GMan")) {
-							    ps.setString(1, "Game Manager");
-							}else if (po.inGroup("CMMan")) {
-							    ps.setString(1, "Community Moderation Manager");
-							}else if (po.inGroup("SMan")) {
-							    ps.setString(1, "Support Manager");
-							}else if (po.inGroup("MMan")) {
-							    ps.setString(1, "Media Manager");
-							}else if (po.inGroup("Masterbuilder")) {
-							    ps.setString(1, "Builders Manager");
-							}else if(po.inGroup("GMT")) {
-								ps.setString(1, "Game Moderator Trainer");
-							}else if (po.inGroup("GM")) {
-							    ps.setString(1, "Game Moderator");
-							}else if (po.inGroup("ST")) {
+							}else if (po.inGroup("AMan")) {
+							    ps.setString(1, "Administrations Manager");
+							}else if (po.inGroup("Admin")) {
+							    ps.setString(1, "Administrator");
+							}else if (po.inGroup("Support")) {
 							    ps.setString(1, "Support Team");
-							}else if (po.inGroup("CM")) {
-							    ps.setString(1, "Community Moderator");
-							}else if (po.inGroup("MM")) {
-							    ps.setString(1, "Media Team");
+							}else if (po.inGroup("Mod")) {
+							    ps.setString(1, "Moderator");
 							}else if (po.inGroup("Builder")) {
 							    ps.setString(1, "Builder");
-							}else if (po.inGroup("TGM")) {
-							    ps.setString(1, "Trial Game Moderator");
-							}else if (po.inGroup("TST")) {
-							    ps.setString(1, "Trial Support Team");
-							}else if (po.inGroup("TCM")) {
-							    ps.setString(1, "Trial Community Moderator");
-							}else if (po.inGroup("TMM")) {
-							    ps.setString(1, "Trial Media Team");
-							}else if (po.inGroup("TBuild")) {
-							    ps.setString(1, "Trial Builder");
 							}else if (po.inGroup("RediFMTeam")) {
 							    ps.setString(1, "RediFM Team");
 							}else if (po.inGroup("RLTM")) {
@@ -340,91 +305,13 @@ public class Main extends JavaPlugin{
 							    ps.setString(1, "User");
 							}
 							ps.setInt(2, moneten);
-							ps.setString(3, stime);
-							ps.setBoolean(4, boo);
-							ps.setString(5, all.getName());
-							ps.setBoolean(6, true);
-							ps.setString(7, "Gamesserver");
-							ps.setString(8, all.getUniqueId().toString());
-							ps.setString(9, stime);
+							ps.setString(3, "Lobby");
 							if(Main.afk_list.contains(all.getName())) {
-								ps.setBoolean(10, true);
+								ps.setBoolean(4, true);
 							}else {
-								ps.setBoolean(10, false);
+								ps.setBoolean(4, false);
 							}
 							ps.executeUpdate();
-						}else {
-							int moneten = AccountData.getAccountBalance(all.getUniqueId().toString(), "default");
-							PreparedStatement ps = gsls.api.mysql.lb.MySQL.getConnection().prepareStatement("UPDATE playerigid SET rank = ?, money = ?, lastOnline = ?, Name = ?, iscurrentlyingame = ?, ifingamewhichserver = ?, untrimmeduuid = ?, iscurrentlyafk = ? WHERE uuid = ?");
-							ps.setString(9, uuid);
-							if (po.inGroup("Developer")) {
-							    ps.setString(1, "Developer");
-							}else if (po.inGroup("Projectmanager")) {
-							    ps.setString(1, "Projectmanager");
-							}else if (po.inGroup("SCMan")) {
-							    ps.setString(1, "Senior Community Manager");
-							}else if (po.inGroup("SGMan")) {
-								ps.setString(1, "Senior Game Manager");
-							}else if (po.inGroup("SCMMan")) {
-								ps.setString(1, "Senior Community Moderation Manager");
-							}else if (po.inGroup("CMan")) {
-								ps.setString(1, "Community Manager");
-							}else if (po.inGroup("GMan")) {
-							    ps.setString(1, "Game Manager");
-							}else if (po.inGroup("CMMan")) {
-							    ps.setString(1, "Community Moderation Manager");
-							}else if (po.inGroup("SMan")) {
-							    ps.setString(1, "Support Manager");
-							}else if (po.inGroup("MMan")) {
-							    ps.setString(1, "Media Manager");
-							}else if (po.inGroup("Masterbuilder")) {
-							    ps.setString(1, "Builders Manager");
-							}else if (po.inGroup("GM")) {
-							    ps.setString(1, "Game Moderator");
-							}else if (po.inGroup("ST")) {
-							    ps.setString(1, "Support Team");
-							}else if (po.inGroup("CM")) {
-							    ps.setString(1, "Community Moderator");
-							}else if (po.inGroup("MM")) {
-							    ps.setString(1, "Media Team");
-							}else if (po.inGroup("Builder")) {
-							    ps.setString(1, "Builder");
-							}else if (po.inGroup("TGM")) {
-							    ps.setString(1, "Trial Game Moderator");
-							}else if (po.inGroup("TST")) {
-							    ps.setString(1, "Trial Support Team");
-							}else if (po.inGroup("TCM")) {
-							    ps.setString(1, "Trial Community Moderator");
-							}else if (po.inGroup("TMM")) {
-							    ps.setString(1, "Trial Media Team");
-							}else if (po.inGroup("TBuild")) {
-							    ps.setString(1, "Trial Builder");
-							}else if (po.inGroup("RediFMTeam")) {
-							    ps.setString(1, "RediFM Team");
-							}else if (po.inGroup("RLTM")) {
-							    ps.setString(1, "Retired Legend Team Member");
-							}else if (po.inGroup("RTM")) {
-							    ps.setString(1, "Retired Team Member");
-							}else if (po.inGroup("Beta")) {
-							    ps.setString(1, "Beta");
-							}else if (po.inGroup("Friend")) {
-							    ps.setString(1, "Friend");
-							}else {
-							    ps.setString(1, "User");
-							}
-							ps.setInt(2, moneten);
-							ps.setString(3, stime);
-							ps.setString(4, all.getName());
-							ps.setBoolean(5, true);
-							ps.setString(6, "Gamesserver");
-							ps.setString(7, all.getUniqueId().toString());
-							if(Main.afk_list.contains(all.getName())) {
-								ps.setBoolean(8, true);
-							}else {
-								ps.setBoolean(8, false);
-							}
-							ps.executeUpdate();
-						}
 					}catch (SQLException sql) {
 						sql.printStackTrace();
 					}

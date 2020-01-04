@@ -27,7 +27,7 @@ public class WarpSetCMD implements CommandExecutor{
 			Player p = (Player)sender;
 			if(args.length == 0) {
 				p.sendMessage(Main.prefix + "§7Usage: /setwarp <Gamename*>");
-				p.sendMessage("§7* -> Defaults: Spawn, BedWars, GunGames, FFA, 1vs1");
+				p.sendMessage("§7* -> Defaults: Spawn, BedWars, GunGames, Masterbuilders");
 			}else if(args.length == 1) {
 				String game = args[0];
 				if(p.hasPermission("mlps.setWarp.Gameslobby")) {
@@ -41,7 +41,7 @@ public class WarpSetCMD implements CommandExecutor{
 				}
 			}else {
 				p.sendMessage(Main.prefix + "§7Usage: /setwarp <Gamename*>");
-				p.sendMessage("§7* -> Defaults: Spawn, BedWars, GunGames, FFA, 1vs1");
+				p.sendMessage("§7* -> Defaults: Spawn, BedWars, GunGames, Masterbuilders");
 			}
 		}
 		return false;
