@@ -34,7 +34,7 @@ public class JoinEV implements Listener {
 		}
 		p.setGameMode(GameMode.SURVIVAL);
 		p.getInventory().clear();
-		p.getInventory().setItem(4, ItemsAPI.defItem(Material.COMPASS, 1, 0, "§9Navigator"));
+		p.getInventory().setItem(4, ItemsAPI.defItem(Material.COMPASS, 1, 0, "§aGames§cSelector"));
 		loc.setX(cfg.getDouble("Warp.spawn.X"));
 		loc.setY(cfg.getDouble("Warp.spawn.Y"));
 		loc.setZ(cfg.getDouble("Warp.spawn.Z"));
@@ -58,8 +58,8 @@ public class JoinEV implements Listener {
 	@EventHandler
 	public void onAction(PlayerInteractEvent e) {
 		if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			if(e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§9Navigator")) {
-				
+			if(e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§aGames§cSelector")) {
+				Navigator.setNavi(e.getPlayer());
 			}
 		}
 	}
