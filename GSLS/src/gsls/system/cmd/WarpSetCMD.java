@@ -72,10 +72,8 @@ public class WarpSetCMD implements CommandExecutor{
         	p.sendMessage(Main.prefix + "§7Default-Warp setted. Game: §9BedWars");
         }else if(game.equalsIgnoreCase("gungames")) {
         	p.sendMessage(Main.prefix + "§7Default-Warp setted. Game: §9GunGames");
-        }else if(game.equalsIgnoreCase("FFA")) {
-        	p.sendMessage(Main.prefix + "§7Default-Warp setted. Game: §9FFA (Free For All)");
-        }else if(game.equalsIgnoreCase("1vs1")) {
-        	p.sendMessage(Main.prefix + "§7Default-Warp setted. Game: §91 vs 1");
+        }else if(game.equalsIgnoreCase("masterbuilders")) {
+        	p.sendMessage(Main.prefix + "§7Default-Warp setted. Game: §9MasterBuilders");
         }else if(game.equalsIgnoreCase("Spawn")) {
         	p.sendMessage(Main.prefix + "§7Spawn setted.");
         }else {
