@@ -39,7 +39,7 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 public class Main extends JavaPlugin{
 	
-	public static String prefix = "§aRedi§cCraft §7» ";
+	public static String prefix = Prefix.returnPrefix("prefix");
 	public static String mysqlprefix = "§6MySQL §7» ";
 	public static String consolesend = prefix + "§aPlease run the command on the game server.";
 	public static String unavailable = prefix + "§cOoops. Thats currently unavailable.";
