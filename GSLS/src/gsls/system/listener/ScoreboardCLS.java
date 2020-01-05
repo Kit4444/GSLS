@@ -28,6 +28,7 @@ import gsls.api.mc.ServerPingAPI;
 import gsls.api.mc.TabAPI;
 import gsls.api.mysql.lb.MySQL;
 import gsls.system.Main;
+import gsls.system.Prefix;
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
@@ -46,15 +47,15 @@ public class ScoreboardCLS implements Listener{
 		
 		o.setDisplaySlot(DisplaySlot.SIDEBAR);
 		if(puser < 20) {
-			o.setDisplayName("§aRedi§cCraft §7» §a" + puser + " §7/§9 " + pusermax);
+			o.setDisplayName(Prefix.returnPrefix("prefix") + "§a" + puser + " §7/§9 " + pusermax);
 		}else if(puser < 40) {
-			o.setDisplayName("§aRedi§cCraft §7» §e" + puser + " §7/§9 " + pusermax);
+			o.setDisplayName(Prefix.returnPrefix("prefix") + "§e" + puser + " §7/§9 " + pusermax);
 		}else if(puser < 60) {
-			o.setDisplayName("§aRedi§cCraft §7» §6" + puser + " §7/§9 " + pusermax);
+			o.setDisplayName(Prefix.returnPrefix("prefix") + "§6" + puser + " §7/§9 " + pusermax);
 		}else if(puser < 80) {
-			o.setDisplayName("§aRedi§cCraft §7» §c" + puser + " §7/§9 " + pusermax);
+			o.setDisplayName(Prefix.returnPrefix("prefix") + "§c" + puser + " §7/§9 " + pusermax);
 		}else if(puser > 80) {
-			o.setDisplayName("§aRedi§cCraft §7» §4" + puser + " §7/§9 " + pusermax);
+			o.setDisplayName(Prefix.returnPrefix("prefix") + "§4" + puser + " §7/§9 " + pusermax);
 		}
 		if(!nick(p).equals("RESET")) {
 			o.getScore("§7Nick:").setScore(13);
