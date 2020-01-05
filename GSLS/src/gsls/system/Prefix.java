@@ -31,9 +31,9 @@ public class Prefix {
 			}
 		}else {
 			if(type.equalsIgnoreCase("prefix")) {
-				s = "§4FB§aRedi§cCraft §7» ";
+				s = "§aRedi§cCraft §7» ";
 			}else if(type.equalsIgnoreCase("msg")) {
-				s = "§4FB§9MSG §7» ";
+				s = "§9MSG §7» ";
 			}else {
 				s = "§cISTD #4511";
 			}

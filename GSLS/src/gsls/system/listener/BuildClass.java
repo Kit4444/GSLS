@@ -3,6 +3,7 @@ package gsls.system.listener;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,9 +32,11 @@ public class BuildClass implements CommandExecutor, Listener{
 					if(p.hasPermission("mlps.canBuild")) {
 						if(build.contains(p.getName())) {
 							build.remove(p.getName());
+							p.setGameMode(GameMode.SURVIVAL);
 							p.sendMessage(Main.prefix + "§7You can't build anymore.");
 						}else {
 							build.add(p.getName());
+							p.setGameMode(GameMode.CREATIVE);
 							p.sendMessage(Main.prefix + "§7You can build now.");
 						}
 					}else {
@@ -48,10 +51,12 @@ public class BuildClass implements CommandExecutor, Listener{
 						if(p.hasPermission("mlps.canBuild.others")) {
 							if(build.contains(p2.getName())) {
 								build.remove(p2.getName());
+								p.setGameMode(GameMode.SURVIVAL);
 								p.sendMessage(Main.prefix + "§7You disallowed §a" + p2.getName() + " §7to build.");
 								p2.sendMessage(Main.prefix + "§7You got disallowed to build from " + p.getDisplayName());
 							}else {
 								build.add(p2.getName());
+								p.setGameMode(GameMode.CREATIVE);
 								p.sendMessage(Main.prefix + "§7You allowed §a" + p2.getName() + " §7to build.");
 								p2.sendMessage(Main.prefix + "§7You got allowed to build from " + p.getDisplayName());
 							}
