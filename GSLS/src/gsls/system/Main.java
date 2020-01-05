@@ -30,6 +30,7 @@ import gsls.system.cmd.WarpSetCMD;
 import gsls.system.listener.BlockClass;
 import gsls.system.listener.BuildClass;
 import gsls.system.listener.JoinEV;
+import gsls.system.listener.Navigator;
 import gsls.system.listener.ScoreboardCLS;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_12_R1.MinecraftServer;
@@ -134,6 +135,7 @@ public class Main extends JavaPlugin{
 		pl.registerEvents(new BlockClass(), this);
 		pl.registerEvents(new AntiExecuteCMD(), this);
 		pl.registerEvents(new JoinEV(), this);
+		pl.registerEvents(new Navigator(), this);
 	}
 	
 	private void registerCMD() {
