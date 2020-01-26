@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+import gsls.api.mc.ItemsAPI;
 import gsls.system.Main;
 
 public class BuildClass implements CommandExecutor, Listener{
@@ -33,10 +35,12 @@ public class BuildClass implements CommandExecutor, Listener{
 						if(build.contains(p.getName())) {
 							build.remove(p.getName());
 							p.setGameMode(GameMode.SURVIVAL);
+							p.getInventory().setItem(4, ItemsAPI.defItem(Material.COMPASS, 1, 0, "§aGames§cSelector"));
 							p.sendMessage(Main.prefix + "§7You can't build anymore.");
 						}else {
 							build.add(p.getName());
 							p.setGameMode(GameMode.CREATIVE);
+							p.getInventory().clear();
 							p.sendMessage(Main.prefix + "§7You can build now.");
 						}
 					}else {
