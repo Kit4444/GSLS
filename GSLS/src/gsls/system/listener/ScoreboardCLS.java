@@ -128,10 +128,10 @@ public class ScoreboardCLS implements Listener{
 	    
 	    p.setScoreboard(sb);
 	    
-	    Team dev = getTeam(sb, "00000", "§dDev §7|§d "); //light-purple
-	    Team pm = getTeam(sb, "00010", "§6PM §7|§6 "); //gold
-	    Team cman = getTeam(sb, "00020", "§2CM §7|§2 "); //dark-green
-	    Team aman = getTeam(sb, "00030", "§4AM §7|§4 "); //dark-red
+	    Team pm = getTeam(sb, "00000", "§6PM §7|§6 "); //gold
+	    Team cman = getTeam(sb, "00010", "§2CM §7|§2 "); //dark-green
+	    Team aman = getTeam(sb, "00020", "§4AM §7|§4 "); //dark-red
+	    Team dev = getTeam(sb, "00030", "§dDev §7|§d "); //light-purple
 	    Team admin = getTeam(sb, "00040", "§cA §7|§c "); //red
 	    Team mod = getTeam(sb, "00050", "§aMod §7|§a "); //green
 	    Team support = getTeam(sb, "00060", "§9S §7|§9 "); //blue
