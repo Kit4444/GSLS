@@ -16,8 +16,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.hotmail.steven.bconomy.account.AccountData;
-
 import gsls.api.mysql.lpb.MySQL;
 import gsls.system.cmd.AFKCMD;
 import gsls.system.cmd.AntiExecuteCMD;
@@ -31,11 +29,10 @@ import gsls.system.listener.BlockClass;
 import gsls.system.listener.BuildClass;
 import gsls.system.listener.JoinEV;
 import gsls.system.listener.Navigator;
+import gsls.system.listener.PlayerIDEvents;
 import gsls.system.listener.ScoreboardCLS;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_12_R1.MinecraftServer;
-import ru.tehkode.permissions.PermissionUser;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 public class Main extends JavaPlugin{
 	
@@ -60,6 +57,7 @@ public class Main extends JavaPlugin{
 		registerCMD();
 		registerMisc();
 		File file = new File("plugins/GSLS/mysql.yml");
+		LanguageHandler.loadCFG();
 		YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 		gsls.api.mysql.lb.MySQL.connect(cfg.getString("MySQL.IP"), cfg.getString("MySQL.Port"), cfg.getString("MySQL.Database"), cfg.getString("MySQL.user"), cfg.getString("MySQL.Pass"));
 		mysql = new MySQL(cfg.getString("MySQL.IP"), Integer.valueOf(cfg.getString("MySQL.Port")), cfg.getString("MySQL.Database"), cfg.getString("MySQL.user"), cfg.getString("MySQL.Pass"));
@@ -69,10 +67,12 @@ public class Main extends JavaPlugin{
 			e.printStackTrace();
 		}
 		Bukkit.getConsoleSender().sendMessage(prefix + "§aPlugin is activated and running!");
+		updateOnlineStatus(true);
 	}
 	
 	public void onDisable() {
 		Bukkit.getConsoleSender().sendMessage(prefix + "§cPlugin will be stopping...");
+		updateOnlineStatus(false);
 		gsls.api.mysql.lb.MySQL.disconnect();
 		try {
 			mysql.disconnect();
@@ -119,8 +119,8 @@ public class Main extends JavaPlugin{
 	private void registerMisc() {
 		ScoreboardCLS.startScheduler(0, 100, 20);
 		serverRestarter(0, 20);
-		writeDBStats(0, 100);
-		updateUserDBIG(0, 100);
+		writeDBStats(0, 50);
+		PlayerIDEvents.updateUserDB(0, 50);
 		try {
 			onCFG();
 		} catch (IOException e) {
@@ -136,6 +136,7 @@ public class Main extends JavaPlugin{
 		pl.registerEvents(new AntiExecuteCMD(), this);
 		pl.registerEvents(new JoinEV(), this);
 		pl.registerEvents(new Navigator(), this);
+		pl.registerEvents(new PlayerIDEvents(), this);
 	}
 	
 	private void registerCMD() {
@@ -149,6 +150,26 @@ public class Main extends JavaPlugin{
 		getCommand("setwarp").setExecutor(new WarpSetCMD());
 		getCommand("setnick").setExecutor(new NickCMD());
 		getCommand("serverinfo").setExecutor(new ServerInfoCMD());
+		getCommand("tg").setExecutor(new LogCMD());
+	}
+	
+	private void updateOnlineStatus(boolean boo) {
+		if(gsls.api.mysql.lb.MySQL.isConnected() == true) {
+			PreparedStatement ps;
+			try {
+				ps = gsls.api.mysql.lb.MySQL.getConnection().prepareStatement("UPDATE serverstats SET online = ? WHERE server = ?");
+				ps.setString(2, Bukkit.getServerName());
+				ps.setBoolean(1, boo);
+				ps.executeUpdate();
+				if(boo == true) {
+					Bukkit.getConsoleSender().sendMessage(prefix + "Written in DB server is up");
+				}else {
+					Bukkit.getConsoleSender().sendMessage(prefix + "Written in DB server is down");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static void serverRestarter(int delay, int period) {
@@ -265,61 +286,4 @@ public class Main extends JavaPlugin{
 	private static String format(double tps) {
 		return String.valueOf((tps > 18.0 ? ChatColor.GREEN : (tps > 16.0 ? ChatColor.YELLOW : ChatColor.RED)).toString()) + (tps > 20.0 ? "*" : "") + Math.min((double)Math.round(tps * 100.0) / 100.0, 20.0);
 	}
-	
-	public static void updateUserDBIG(int delay, int period) {
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				for(Player all : Bukkit.getOnlinePlayers()) {
-					try {
-						String uuid = all.getUniqueId().toString().replaceAll("-", "");
-						PermissionUser po = PermissionsEx.getUser(all);
-							int moneten = AccountData.getAccountBalance(all.getUniqueId().toString(), "default");
-							PreparedStatement ps = gsls.api.mysql.lb.MySQL.getConnection().prepareStatement("UPDATE playerigid SET rank = ?, money = ?, ifingamewhichserver = ?, iscurrentlyafk = ? WHERE uuid = ?");
-							ps.setString(5, uuid);
-							if (po.inGroup("Developer")) {
-							    ps.setString(1, "Developer");
-							}else if (po.inGroup("Projectmanager")) {
-							    ps.setString(1, "Projectmanager");
-							}else if (po.inGroup("CMan")) {
-								ps.setString(1, "Community Manager");
-							}else if (po.inGroup("AMan")) {
-							    ps.setString(1, "Administrations Manager");
-							}else if (po.inGroup("Admin")) {
-							    ps.setString(1, "Administrator");
-							}else if (po.inGroup("Support")) {
-							    ps.setString(1, "Support Team");
-							}else if (po.inGroup("Mod")) {
-							    ps.setString(1, "Moderator");
-							}else if (po.inGroup("Builder")) {
-							    ps.setString(1, "Builder");
-							}else if (po.inGroup("RediFMTeam")) {
-							    ps.setString(1, "RediFM Team");
-							}else if (po.inGroup("RLTM")) {
-							    ps.setString(1, "Retired Legend Team Member");
-							}else if (po.inGroup("RTM")) {
-							    ps.setString(1, "Retired Team Member");
-							}else if (po.inGroup("Beta")) {
-							    ps.setString(1, "Beta");
-							}else if (po.inGroup("Friend")) {
-							    ps.setString(1, "Friend");
-							}else {
-							    ps.setString(1, "User");
-							}
-							ps.setInt(2, moneten);
-							ps.setString(3, "Lobby");
-							if(Main.afk_list.contains(all.getName())) {
-								ps.setBoolean(4, true);
-							}else {
-								ps.setBoolean(4, false);
-							}
-							ps.executeUpdate();
-					}catch (SQLException sql) {
-						sql.printStackTrace();
-					}
-				}
-			}
-		}.runTaskTimer(Main.instance, delay, period);
-	}
-
 }
