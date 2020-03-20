@@ -1,7 +1,10 @@
 author: MauriceLPs
 name: GSLS
-version: 1.0.0a
 main: gsls.system.Main
+version: 200321.23b
+api-version: 1.12.2
+website: www.redicraft.eu
+prefix: REDICRAFTSERVER
 
 commands:
     build:
@@ -14,3 +17,5 @@ commands:
     setwarp:
     setnick:
     serverinfo:
+    tg:
+    
