@@ -22,8 +22,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import com.hotmail.steven.bconomy.account.AccountData;
-
+import gsls.api.mc.GetPlayerAPI;
 import gsls.api.mc.ServerPingAPI;
 import gsls.api.mc.TabAPI;
 import gsls.api.mysql.lb.MySQL;
@@ -41,43 +40,29 @@ public class ScoreboardCLS implements Listener{
 		Scoreboard sb = Bukkit.getScoreboardManager().getNewScoreboard();
 		Objective o = sb.registerNewObjective("aaa", "bbb");
 		PermissionUser po = PermissionsEx.getUser(p);
-		int moneten = AccountData.getAccountBalance(p.getUniqueId().toString(), "default");
-		int puser = proxy.getOnline();
-		int pusermax = proxy.getMax();
+		int puser = GetPlayerAPI.getPlayers("BungeeCord", "currPlayer");
+		int pusermax = GetPlayerAPI.getPlayers("BungeeCord", "maxPlayer");
+		int online = Bukkit.getOnlinePlayers().size();
+		String dbpr = Prefix.returnPrefix("prefix");
 		
 		o.setDisplaySlot(DisplaySlot.SIDEBAR);
-		if(puser < 20) {
-			o.setDisplayName(Prefix.returnPrefix("prefix") + "§a" + puser + " §7/§9 " + pusermax);
-		}else if(puser < 40) {
-			o.setDisplayName(Prefix.returnPrefix("prefix") + "§e" + puser + " §7/§9 " + pusermax);
-		}else if(puser < 60) {
-			o.setDisplayName(Prefix.returnPrefix("prefix") + "§6" + puser + " §7/§9 " + pusermax);
-		}else if(puser < 80) {
-			o.setDisplayName(Prefix.returnPrefix("prefix") + "§c" + puser + " §7/§9 " + pusermax);
-		}else if(puser > 80) {
-			o.setDisplayName(Prefix.returnPrefix("prefix") + "§4" + puser + " §7/§9 " + pusermax);
+		o.setDisplayName(dbpr.substring(0, 14));
+		o.getScore("§7Players:").setScore(10);
+		if(puser < 8) {
+			o.getScore("  §7(§9" + online + "§7) §a" + puser + " §7/§c " + pusermax).setScore(9);
+		}else if(puser < 16) {
+			o.getScore("  §7(§9" + online + "§7) §e" + puser + " §7/§c " + pusermax).setScore(9);
+		}else if(puser < 24) {
+			o.getScore("  §7(§9" + online + "§7) §6" + puser + " §7/§c " + pusermax).setScore(9);
+		}else if(puser < 32) {
+			o.getScore("  §7(§9" + online + "§7) §c" + puser + " §7/§c " + pusermax).setScore(9);
+		}else if(puser > 32) {
+			o.getScore("  §7(§9" + online + "§7) §4" + puser + " §7/§c " + pusermax).setScore(9);
 		}
-		if(!nick(p).equals("RESET")) {
-			o.getScore("§7Nick:").setScore(13);
-			o.getScore("§9  " + nick(p)).setScore(12);
-			o.getScore("§0").setScore(11);
-		}
-    	if(p.hasPermission("mlps.canBan")) {
-    		HashMap<String, Object> hml = new HashMap<>();
-        	hml.put("Name", p.getUniqueId().toString().replace("-", ""));
-        	ResultSet rss = Main.mysql.select("loginsys", hml);
-        	rss.next();
-        	o.getScore("§7Logged in:").setScore(10);
-    		if(rss.getBoolean("loggedin")) {
-        		o.getScore("§9  true").setScore(9);
-        	}else {
-        		o.getScore("§9  false").setScore(9);
-        	}
-    		o.getScore(" ").setScore(8);
-    	}
-		o.getScore("§7Money:").setScore(7);
-		o.getScore("  §9" + moneten).setScore(6);
-		o.getScore("§b").setScore(5);
+		o.getScore("").setScore(8);
+		o.getScore("§7Current Server:").setScore(7);
+		o.getScore("§9  " + Bukkit.getServerName() + " §7|§9 " + Bukkit.getServerId()).setScore(6);
+		o.getScore("§a").setScore(5);
 		o.getScore("§7Rank:").setScore(4);
 		if (po.inGroup("Developer")) {
 			o.getScore("  §dDeveloper").setScore(3);
@@ -104,19 +89,19 @@ public class ScoreboardCLS implements Listener{
 		}else if(po.inGroup("Partner")) {
 			o.getScore("  §aPartner").setScore(3);
 		}else if (po.inGroup("Beta")) {
-			o.getScore("  §5Beta-Tester").setScore(3);
+		    o.getScore("  §5Beta-Tester").setScore(3);
 		}else if(po.inGroup("Patron")) {
-			o.getScore("  §ePatron").setScore(3);
+		    o.getScore("  §ePatron").setScore(3);
 		}else if(po.inGroup("NitroBooster")) {
-			o.getScore("  §5Nitro Booster").setScore(3);
+		    o.getScore("  §5Nitro Booster").setScore(3);
 		}else if(po.inGroup("VIPpls")) {
 			o.getScore("  §eVIP§2+").setScore(3);
 		}else if(po.inGroup("VIP")) {
 			o.getScore("  §eVIP").setScore(3);
 		}else if(po.inGroup("Premiumpls")) {
-			o.getScore("  §ePremium§2+").setScore(3);
+		   	o.getScore("  §ePremium§2+").setScore(3);
 		}else if(po.inGroup("Premium")) {
-			o.getScore("  §ePremium").setScore(3);
+		   	o.getScore("  §ePremium").setScore(3);
 		}else if (po.inGroup("Friend")) {
 			o.getScore("  §3Friend").setScore(3);
 		}else {
