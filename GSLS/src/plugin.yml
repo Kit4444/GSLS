@@ -1,7 +1,7 @@
 author: MauriceLPs
 name: GSLS
 main: gsls.system.Main
-version: 200321.23b
+version: 200321.26s
 api-version: 1.12.2
 website: www.redicraft.eu
 prefix: REDICRAFTSERVER
@@ -18,4 +18,9 @@ commands:
     setnick:
     serverinfo:
     tg:
-    
+    lockdown:
+    monitoring:
+    ping:
+    pinfo:
+    gc:
+    servers:

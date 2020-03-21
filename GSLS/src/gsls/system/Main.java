@@ -20,6 +20,7 @@ import gsls.api.mysql.lpb.MySQL;
 import gsls.system.cmd.AFKCMD;
 import gsls.system.cmd.AntiExecuteCMD;
 import gsls.system.cmd.CIDsetCMD;
+import gsls.system.cmd.GeneralCommands;
 import gsls.system.cmd.LogCMD;
 import gsls.system.cmd.NickCMD;
 import gsls.system.cmd.RecruitmentCMD;
@@ -151,6 +152,12 @@ public class Main extends JavaPlugin{
 		getCommand("setnick").setExecutor(new NickCMD());
 		getCommand("serverinfo").setExecutor(new ServerInfoCMD());
 		getCommand("tg").setExecutor(new LogCMD());
+		getCommand("gc").setExecutor(new GeneralCommands());
+		getCommand("ping").setExecutor(new GeneralCommands());
+		getCommand("pinfo").setExecutor(new GeneralCommands());
+		getCommand("lockdown").setExecutor(new GeneralCommands());
+		getCommand("monitoring").setExecutor(new GeneralCommands());
+		getCommand("servers").setExecutor(new GeneralCommands());
 	}
 	
 	private void updateOnlineStatus(boolean boo) {
