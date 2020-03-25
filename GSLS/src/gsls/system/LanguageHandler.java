@@ -41,6 +41,8 @@ public class LanguageHandler {
 		cfg.addDefault("Language.EN.cmd.logout.success", "&7You are now logged out.");
 		cfg.addDefault("Language.EN.cmd.tg.hide", "&7Your group is now hidden.");
 		cfg.addDefault("Language.EN.cmd.tg.visible", "&7Your group is now visible.");
+		cfg.addDefault("Language.EN.Navigator.offmessage", "");
+		cfg.addDefault("Language.EN.Navigator.lockmessage", "");
 		//de
 		cfg.addDefault("Language.DE.cmd.afk.join", "&7You are now AFK.");
 		cfg.addDefault("Language.DE.cmd.afk.leave", "&7You are no longer AFK.");
