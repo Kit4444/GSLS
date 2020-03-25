@@ -59,7 +59,7 @@ public class JoinEV implements Listener {
 	public void onAction(PlayerInteractEvent e) {
 		if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			if(e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§aGames§cSelector")) {
-				Navigator.setNavi(e.getPlayer());
+				Navigator.mainMenu(e.getPlayer());
 			}
 		}
 	}
