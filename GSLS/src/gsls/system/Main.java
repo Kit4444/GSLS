@@ -136,7 +136,7 @@ public class Main extends JavaPlugin{
 		pl.registerEvents(new BlockClass(), this);
 		pl.registerEvents(new AntiExecuteCMD(), this);
 		pl.registerEvents(new JoinEV(), this);
-		pl.registerEvents(new Navigator(), this);
+		pl.registerEvents(new Navigator(this), this);
 		pl.registerEvents(new PlayerIDEvents(), this);
 	}
 	
